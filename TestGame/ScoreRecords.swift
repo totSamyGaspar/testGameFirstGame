@@ -19,16 +19,22 @@ struct ScoreRecords: View {
             Text("High Scores")
                 .font(.title)
                 .bold()
-            List {
-                ForEach(Array(scores.prefix(10).enumerated()), id: \.offset) { index, score in
-                    HStack {
-                        Text("Game \(index + 1)")
-                            .frame(width: 80, alignment: .leading)
-                        Spacer()
-                        Text("\(score)")
-                            .fontWeight(score == bestScore ? .bold : .regular)
-                            .foregroundColor(score == bestScore ? .yellow : .primary)
-                            .frame(width: 80, alignment: .trailing)
+            if scores.isEmpty {
+                Text("No scores yet...")
+                    .foregroundStyle(.gray)
+                    .padding()
+            } else {
+                List {
+                    ForEach(Array(scores.prefix(10).enumerated()), id: \.offset) { index, score in
+                        HStack {
+                            Text("Game \(index + 1)")
+                                .frame(width: 80, alignment: .leading)
+                            Spacer()
+                            Text("\(score)")
+                                .fontWeight(score == bestScore ? .bold : .regular)
+                                .foregroundColor(score == bestScore ? .yellow : .primary)
+                                .frame(width: 80, alignment: .trailing)
+                        }
                     }
                 }
             }
@@ -39,6 +45,7 @@ struct ScoreRecords: View {
             loadScores()
         }
     }
+    // Loads scores from UserDefaults, if no scores exist, returns an empty array
     private func loadScores() {
         scores = UserDefaults.standard.array(forKey: "scores") as? [Int] ?? []
     }
