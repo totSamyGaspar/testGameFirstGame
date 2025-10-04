@@ -28,7 +28,6 @@
 //  3. Changes are instantly saved and applied globally
 //     (music is started/stopped immediately).
 //
-
 import SwiftUI
 
 struct SettingsView: View {
@@ -40,12 +39,20 @@ struct SettingsView: View {
             Toggle("Music:", isOn: $musicPlay)
             Toggle("Sounds", isOn: $sfxPlay)
         }
-        .onChange(of: musicPlay) { oldValue, newValue in
-            if newValue {
-                AudioManager.shared.playMusic(name: "menuTrack")
+        .onChange(of: musicPlay) { value in
+            if #available(iOS 17.0, *) {
+                handleMusicChange(isOn: value)
             } else {
-                AudioManager.shared.stopMusic()
+                handleMusicChange(isOn: value)
             }
+        }
+    }
+    
+    private func handleMusicChange(isOn: Bool) {
+        if isOn {
+            AudioManager.shared.playMusic(name: "menuTrack")
+        } else {
+            AudioManager.shared.stopMusic()
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  ScoreRecords.swift
+//  ScoreRecordsView.swift
 //  TestGame
 //
 //  Created by Edward Gasparian on 04.10.2025.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ScoreRecords: View {
+struct ScoreRecordsView: View {
     @State private var scores: [Int] = []
     
     var bestScore: Int {
@@ -52,5 +52,5 @@ struct ScoreRecords: View {
 }
 
 #Preview {
-    ScoreRecords()
+    ScoreRecordsView()
 }
